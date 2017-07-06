@@ -1,5 +1,5 @@
 HousingCacheView::Application.routes.draw do
 
-  get 'cache-view'            => 'cache_view#bla'
+  get 'bla'            => 'cache_view#bla'
   
 end

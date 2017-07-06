@@ -1,4 +1,4 @@
-HousingCacheView::Application.routes.draw do
+HousingCacheView::Engine.routes.draw do
 
   get 'bla'            => 'cache_view#bla'
   

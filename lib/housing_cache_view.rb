@@ -1,4 +1,4 @@
-require "housing_cache_view/version"
+require "housing_cache_view/engine"
 
 module HousingCacheView
 end

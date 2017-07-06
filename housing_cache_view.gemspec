@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.version       = HousingCacheView::VERSION
   spec.authors       = ["Mohammed Riyaz"]
   spec.email         = ["mohammed.riyaz@housing.com"]
-  spec.files            = Dir["{app,config,lib}/**/*"] + ["README.md"]
+  spec.files         = Dir["{app,config,lib}/**/*"] + ["README.md"]
   spec.summary       = "Housing Cache View Gem"
   spec.description   = "A gem to read the values of caches from application servers"
   spec.homepage      = "https://github.com/elarahq/housing.cache.view"

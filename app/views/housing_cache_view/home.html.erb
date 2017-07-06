@@ -1,0 +1,33 @@
+<h1>Read From Application Cache</h1>
+<%= stylesheet_link_tag "buttons.css" %>
+
+<div class="content" style="padding-bottom: 50px;">
+  <form action="/cache-view" method="get" class = "form-horizontal">
+    <div align="center">
+      Cache Type<br>
+      <input type="radio" name="cache_type" id="rails_cache" value="rails">Rails
+      <input type="radio" name="cache_type" id="redis_cache" value="redis">Redis
+    </div><br>
+    <div id="rails_cache_div" style="display: none;" align="center">
+      Rails Cache Form
+    </div>
+    <div id="redis_cache_div" style="display: none;" align="center">
+      Redis Cache Form
+    </div>
+  </form>
+</div>
+
+
+<script>
+  $('input:radio[name="cache_type"]').change(function() {
+    if ($(this).val() == 'rails') {
+      document.getElementById("rails_cache_div").style.display = '';
+      document.getElementById("redis_cache_div").style.display = 'none';
+    } else {
+      document.getElementById("rails_cache_div").style.display = 'none';
+      document.getElementById("redis_cache_div").style.display = '';
+    }
+  });
+</script>
+
+<style></style>

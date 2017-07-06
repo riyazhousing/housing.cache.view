@@ -1,6 +1,4 @@
 HousingCacheView::Engine.routes.draw do
 
-  get 'bla'            => 'cache_view#bla'
-  
-  
+  root :to => 'cache_view#bla'
 end

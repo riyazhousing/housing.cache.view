@@ -4,10 +4,10 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'housing_cache_view/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "housing_cache_view"
+  spec.name          = "housing.cache.view"
   spec.version       = HousingCacheView::VERSION
   spec.authors       = ["Mohammed Riyaz"]
-  spec.email         = ["riyazmd.pechu@gmail.com"]
+  spec.email         = ["mohammed.riyaz@housing.com"]
 
   spec.summary       = %q{TODO: Write a short summary, because Rubygems requires one.}
   spec.description   = %q{TODO: Write a longer description or delete this line.}

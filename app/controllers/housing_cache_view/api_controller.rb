@@ -1,5 +1,5 @@
 module HousingCacheView
-  class CacheViewController < HousingCacheView::ApplicationController
+  class ApiController < ApplicationController
     def bla
       render json: {"message" => "Thu"}, status: 200
     end

@@ -1,4 +1,4 @@
-HousingCacheView::Engine.routes.draw do
+Rails.application.routes.draw do
 
-  root :to => 'housing_cache_view/cache_view#bla'
+  root :to => 'housing_cache_view/api#bla'
 end

@@ -1,19 +1,41 @@
 <h1>Read From Application Cache</h1>
 <%= stylesheet_link_tag "buttons.css" %>
 
-<div class="content" style="padding-bottom: 50px;">
-  <form action="/cache-view" method="get" class = "form-horizontal">
-    <div align="center">
-      Cache Type<br>
-      <input type="radio" name="cache_type" id="rails_cache" value="rails">Rails
-      <input type="radio" name="cache_type" id="redis_cache" value="redis">Redis
-    </div><br>
-    <div id="rails_cache_div" style="display: none;" align="center">
-      Rails Cache Form
-    </div>
-    <div id="redis_cache_div" style="display: none;" align="center">
-      Redis Cache Form
-    </div>
+<div class="content" style="padding-bottom: 50px;"> 
+  <form id="read_cache_form" action="/cache-view" method="get">
+    <table align="center" cellpadding="10">
+      <tr >
+        <td align="right" width="50%"><em>Cache Type:</em></td>
+        <td align="left" width="50%">
+          <input type="radio" name="cache_type" id="rails_cache" value="rails">Rails
+          <input type="radio" name="cache_type" id="redis_cache" value="redis">Redis
+        </td>
+      </tr>
+      <tr id="rails_cache_row" style="display: none">
+        <td align="right"><em>Rails Cache Key:</em></td>
+        <td align="left"><input type="text" id="rails_cache_key" name="rails_cache_key" required/></td>
+      </tr>
+      <tr id="redis_disclaimer" style="display: none">
+        <td align="right"></td>
+        <td align="left"><em style="color: #d00;">Default Redis Host and Port Will be Used</em></td>
+      </tr>
+      <tr id="redis_db_row" style="display: none">
+        <td align="right"><em>Redis DB (do not edit if unsure):</em></td>
+        <td align="left"><input type="text" id="redis_cache_db" name="redis_cache_db" value='1'/></td>
+      </tr>
+      <tr id="redis_namespace_row" style="display: none">
+        <td align="right"><em>Redis namespace:</em></td>
+        <td align="left"><input type="text" id="redis_namespace" name="redis_namespace" required/></td>
+      </tr>
+      <tr id="redis_cache_key_row" style="display: none">
+        <td align="right"><em>Cache Key:</em></td>
+        <td align="left"><input type="text" id="redis_cache_key" name="redis_cache_key" required/><br></td>
+      </tr>
+      <tr id="submit_row" style="display: none">
+        <td></td>
+        <td align="left"><input class="button button-large button-raised" type="submit" value="Fetch"></button></td>
+      </tr>
+    </table>
   </form>
 </div>
 
@@ -21,13 +43,53 @@
 <script>
   $('input:radio[name="cache_type"]').change(function() {
     if ($(this).val() == 'rails') {
-      document.getElementById("rails_cache_div").style.display = '';
-      document.getElementById("redis_cache_div").style.display = 'none';
+      document.getElementById("rails_cache_row").style.display = 'table-row';
+      document.getElementById("redis_db_row").style.display = 'none';
+      document.getElementById("redis_namespace_row").style.display = 'none';
+      document.getElementById("redis_cache_key_row").style.display = 'none';
+      document.getElementById("redis_disclaimer").style.display = 'none';
+      document.getElementById("submit_row").style.display = 'table-row';
+      $('#rails_cache_key').prop('required',true);
+      $("#redis_namespace, #redis_cache_key").removeAttr('required');
     } else {
-      document.getElementById("rails_cache_div").style.display = 'none';
-      document.getElementById("redis_cache_div").style.display = '';
+      document.getElementById("rails_cache_row").style.display = 'none';
+      document.getElementById("redis_disclaimer").style.display = 'table-row';
+      document.getElementById("redis_db_row").style.display = 'table-row';
+      document.getElementById("redis_namespace_row").style.display = 'table-row';
+      document.getElementById("redis_cache_key_row").style.display = 'table-row';
+      document.getElementById("submit_row").style.display = 'table-row';
+      $("#redis_namespace, #redis_cache_key").prop('required',true);
+      $('#rails_cache_key').removeAttr('required');
     }
+  });
+
+  $('#read_cache_form').submit(function(event) {
+    var cache_type = $('input:radio[name="cache_type"]').val();
+    // var url_salt = "!!YGHTbOSgPruHiSDoCoXucQ";
+    var url_salt = "<%=HousingCacheView::DELIIMITER%>" + "<%=HousingCacheView::SALT%>";
+    var url_path = "/cache-view?p=";
+    if (cache_type=="rails")
+    {
+      var cache_key = $('#rails_cache_key').val();
+      var params = "rails_cache_key="+cache_key+url_salt;
+      var encoded_request = btoa(params);
+    }
+    else
+    {
+      var redis_cache_db = $('#redis_cache_db').val();
+      var redis_namespace = $('#redis_namespace').val();
+      var redis_cache_key = $('#redis_cache_key').val();
+      var params = "redis_cache_db="+redis_cache_db+"redis_namespace="+redis_namespace+"redis_cache_key="+redis_cache_key+url_salt;
+      var encoded_request = btoa(params);
+    }
+    event.preventDefault();
+    window.location.href = url_path+encoded_request; 
   });
 </script>
 
-<style></style>
+<style>
+  .control-label:after { 
+    color: #d00;
+    content: "*";
+}
+</style>

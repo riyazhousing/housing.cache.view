@@ -2,9 +2,6 @@
 <%= stylesheet_link_tag "buttons.css" %>
 
 <div class="content" style="padding-bottom: 50px;">
-  
-  <input type="text" id="url_salt" style="display: none;" value="<%=HousingCacheView::SALT%>">
-  <input type="text" id="delimiter" style="display: none;" value="<%=HousingCacheView::DELIMITER%>">
   <form id="read_cache_form" action="/cache-view" method="get">
     <table align="center" cellpadding="10">
       <tr >
@@ -69,7 +66,7 @@
   $('#read_cache_form').submit(function(event) {
     var cache_type = $('input:radio[name="cache_type"]').val();
     // var url_salt = "!!YGHTbOSgPruHiSDoCoXucQ";
-    var url_salt = $('#delimiter').val() + $('#url_salt').val();
+    var url_salt = "<%=HousingCacheView::DELIMITER%>" + "<%=HousingCacheView::SALT%>";
     var url_path = "/cache-view?p=";
     if (cache_type=="rails")
     {

@@ -1,6 +1,7 @@
 module HousingCacheView
   class ApiController < ::HousingCacheView::ApplicationController
     def bla
+      binding.pry
       # http://www.java-samples.com/showtutorial.php?tutorialid=1090
       # require "base64"
 

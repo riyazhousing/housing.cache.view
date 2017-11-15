@@ -85,7 +85,7 @@
 <script>
   $('#read_cache_form').submit(function(event) {
     var url_salt = "<%=HousingCacheView::DELIMITER%>" + "<%=HousingCacheView::SALT%>";
-    var url_path = "/blabla?p=";
+    var url_path = "/cache-view?p=";
     if (document.getElementById('rails_cache').checked){
       var cache_key = $('#rails_cache_key').val();
       var params = "rails_cache_key="+cache_key+url_salt;

@@ -62,7 +62,7 @@
         </tr>
         <tr>
           <td valign="center">
-            <% if (@values.is_a? String) %>
+            <% if ((@values.is_a? String) || (@values.is_a? Integer) || (@values.is_a? Float) || (@values.is_a? TrueClass) || (@values.is_a? FalseClass)) %>
               <ul><li><%= @values %></li></ul>
             <% elsif (@values.is_a? Hash) %>
               <% @values.each do |attr, v| %>

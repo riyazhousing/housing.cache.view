@@ -31,7 +31,7 @@ module HousingCacheView
           @error = "Redis Error: " + e.message
         end
       end
-      @error = "No values found in cache for the provided key"
+      @error = "No values found in cache for the provided key" if (@values.blank? && @error.blank?)
     end
 
     def parse_params_and_read_cache encoded_url

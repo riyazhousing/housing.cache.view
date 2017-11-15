@@ -8,6 +8,12 @@
   <h1>Read From Application Cache</h1>
 <%= stylesheet_link_tag "buttons.css" %>
 
+<h5 align="center" id="status_message" >
+  <% if @error.present? %>
+    <font color="red"><%= @error %></font>
+  <% end %>
+</h5>
+
 <div class="content" style="padding-bottom: 50px;">
   <form id="read_cache_form" action="/cache-view" method="get">
     <table align="center" cellpadding="10">
@@ -46,35 +52,53 @@
   </form>
 </div>
 
-    <div class="container-fluid fill main" style="min-height:200px;">
-      <%= yield %>
-    </div>
-    <%= yield :extra_javascript %>
+<%= yield :extra_javascript %>
+
+  <div align="center">
+    <% if (@values.present?)%>
+      <table class="table table-bordered" id="display_table" cellpadding="5" align="center">
+        <tr>
+          <th>Cache Values (<%= @values.class%>)</th>
+        </tr>
+        <tr>
+          <td valign="center">
+            <% if (@values.is_a? String) %>
+              <ul><li><%= @values %></li></ul>
+            <% elsif (@values.is_a? Hash) %>
+              <% @values.each do |attr, v| %>
+                <ul><li><b><%= attr %></b> : <%= v %></li></ul>
+              <% end %>
+            <% elsif (@values.is_a? Array) %>
+              <% @values.each do |item| %>
+                <ul><li><%= item %></li></ul>
+              <% end %>
+            <% end %>
+          </td>
+        </tr>
+      </table>
+    <% end%>
+  </div>
   </body>
 </html>
 
 
 <script>
   $('#read_cache_form').submit(function(event) {
-    var cache_type = $('input:radio[name="cache_type"]').val();
     var url_salt = "<%=HousingCacheView::DELIMITER%>" + "<%=HousingCacheView::SALT%>";
-    var url_path = "/cache-view?p=";
-    if (cache_type=="rails")
-    {
+    var url_path = "/blabla?p=";
+    if (document.getElementById('rails_cache').checked){
       var cache_key = $('#rails_cache_key').val();
       var params = "rails_cache_key="+cache_key+url_salt;
-      var encoded_request = btoa(params);
     }
-    else
-    {
+    else if (document.getElementById('redis_cache').checked){
       var redis_cache_db = $('#redis_cache_db').val();
       var redis_namespace = $('#redis_namespace').val();
       var redis_cache_key = $('#redis_cache_key').val();
-      var params = "redis_cache_db="+redis_cache_db+"redis_namespace="+redis_namespace+"redis_cache_key="+redis_cache_key+url_salt;
-      var encoded_request = btoa(params);
+      var params = "redis_cache_db="+redis_cache_db+"&redis_namespace="+redis_namespace+"&redis_cache_key="+redis_cache_key+url_salt;
     }
+    var encoded_request = btoa(params);
     event.preventDefault();
-    window.location.href = url_path+encoded_request; 
+    window.location.href = url_path+encoded_request;
   });
 
   $('input:radio[name="cache_type"]').change(function() {

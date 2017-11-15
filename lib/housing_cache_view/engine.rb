@@ -1,3 +1,5 @@
+require 'jquery-rails'
+
 module HousingCacheView
   class Engine < ::Rails::Engine
     # isolate_namespace HousingCacheView

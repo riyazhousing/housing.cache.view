@@ -4,7 +4,7 @@ module HousingCacheView
 
     def bla
       parse_params_and_read_cache(params["p"])
-      render "profiles/blabla", status: 200, layout: false
+      render "housing_cache_view/home", status: 200, layout: false
     end
 
     private
